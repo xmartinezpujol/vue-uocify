@@ -1,7 +1,9 @@
 <template>
     <main class="page-search">
         <h1 class="main-title">Resultados de {{ query }}</h1>
-
+        <div class="loader-full" v-if="!(albums && artists && tracks)">
+          <b-spinner variant="info" label="Loading..."></b-spinner>
+        </div>
         <section v-if="albums && artists && tracks" class="tabs">
             <b-tabs>
 
@@ -61,9 +63,9 @@ export default {
     watch: {
       query: function (newQuery, oldQuery) {
         if (newQuery !== oldQuery) {
-          this.tracks = [];
-          this.albums = [];
-          this.artists = [];
+          this.tracks = null;
+          this.albums = null;
+          this.artists = null;
           this.updateTracks();
           this.updateAlbums();
           this.updateArtists();
